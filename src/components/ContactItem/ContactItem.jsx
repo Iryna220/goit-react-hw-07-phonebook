@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
-import { removeContact } from 'redux/contacts/contactSlice';
+import { deleteContact } from 'redux/contacts/contactOperations';
 import css from './ContactItem.module.css';
 
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
 
   const onRemoveContact = payload => {
-    dispatch(removeContact(payload));
+    dispatch(deleteContact(payload));
   };
 
   return (
