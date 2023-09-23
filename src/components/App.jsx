@@ -1,5 +1,8 @@
-import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/contacts/contactSelectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, getIsLoading } from 'redux/contacts/contactSelectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contacts/contactOperations';
+
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
@@ -10,10 +13,18 @@ import Loader from './Loader/Loader';
 function App() {
   const contacts = useSelector(getContacts);
   const isContacts = Boolean(contacts.length);
+  const loading = useSelector(getIsLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  console.log(loading);
 
   return (
     <div>
-      <Loader />
+      {loading && <Loader />}
       <div className={css.phonebookSection}>
         <h1 className={css.phonebookTitle}>Phonebook</h1>
         <ContactForm />
